@@ -1,0 +1,33 @@
+# Compiled files
+/target
+/classes
+/checkouts
+
+# Classes and archives
+*.class
+*.jar
+
+# Leiningen
+.lein-repl-history
+/.lein-*
+/.nrepl-port
+/.prepl-port
+.hgignore
+.hg/
+
+# Maven
+pom.xml
+pom.xml.asc
+
+# Profiles
+profiles.clj
+
+# Cursive Clojure (IDE)
+.idea/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Mac OS
+.DS_Store
