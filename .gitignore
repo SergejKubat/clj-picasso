@@ -23,7 +23,7 @@ pom.xml.asc
 profiles.clj
 
 # Cursive Clojure (IDE)
-.idea/
+/.idea/
 
 # Sublime Text
 *.sublime-project
