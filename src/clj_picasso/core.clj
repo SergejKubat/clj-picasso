@@ -83,6 +83,26 @@
             (recur (inc left-x) (dec right-x))))))
     mirrored-image))
 
+(defn generate-random-pixel []
+  "Generate pixel with random channel values."
+  (let [a (long (rand-int 256))
+        r (long (rand-int 256))
+        g (long (rand-int 256))
+        b (long (rand-int 256))]
+    (bit-or (bit-shift-left a 24)
+            (bit-shift-left r 16)
+            (bit-shift-left g 8)
+            b)))
+
+(defn ^BufferedImage generate-random-image [width height]
+  "Generate a random image with the specified width and height."
+  (let [img (BufferedImage. width height BufferedImage/TYPE_INT_ARGB)]
+    (doseq [y (range height)]
+      (doseq [x (range width)]
+        (let [pixel (generate-random-pixel)]
+          (.setRGB img x y pixel))))
+    img))
+
 (def image (load-image "./resources/images/input.png"))
 
 ;(save-image (resize-image image 400 225) "./resources/images/resized.png")
@@ -90,3 +110,4 @@
 ;(save-image (crop-image image 100 100 200 200) "./resources/images/cropped.png")
 ;(save-image (rotate-image image (/ Math/PI 2)) "./resources/images/rotated.png")
 ;(save-image (mirror-image image) "./resources/images/mirrored.png")
+;(save-image (generate-random-image 250 250) "./resources/images/random.png")
