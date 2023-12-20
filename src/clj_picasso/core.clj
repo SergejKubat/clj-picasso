@@ -8,7 +8,8 @@
 
 (ns ^{:author "Sergej Kubat"}
   clj-picasso.core
-  (:import (java.awt.image BufferedImage)
+  (:import (java.awt.geom AffineTransform)
+           (java.awt.image BufferedImage)
            [javax.imageio ImageIO]
            [java.io File IOException]))
 
@@ -56,6 +57,18 @@
       (.dispose))
     cropped-image))
 
+(defn ^BufferedImage rotate-image [^BufferedImage image angle]
+  "Rotate the given image by the specified angle in radians."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        rotated-image (BufferedImage. width height (.getType image))]
+    (let [graphics (.createGraphics rotated-image)
+          transform (AffineTransform.)]
+      (.rotate transform angle (/ width 2) (/ height 2))
+      (.drawImage graphics image transform nil)
+      (.dispose graphics))
+    rotated-image))
+
 (def image (load-image "./resources/images/input.png"))
 
 (save-image (resize-image image 400 225) "./resources/images/resized.png")
@@ -63,3 +76,5 @@
 (save-image (scale-image image 2.0) "./resources/images/scaled.png")
 
 (save-image (crop-image image 100 100 200 200) "./resources/images/cropped.png")
+
+(save-image (rotate-image image (/ Math/PI 2)) "./resources/images/rotated.png")
