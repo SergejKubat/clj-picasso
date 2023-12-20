@@ -69,12 +69,24 @@
       (.dispose graphics))
     rotated-image))
 
+(defn ^BufferedImage mirror-image [^BufferedImage image]
+  "Create a mirror image from given image."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        mirrored-image (BufferedImage. width height (.getType image))]
+    (doseq [y (range height)]
+      (loop [left-x 0
+             right-x (dec width)]
+        (when (< left-x width)
+          (let [pixel (.getRGB image left-x y)]
+            (.setRGB mirrored-image right-x y pixel)
+            (recur (inc left-x) (dec right-x))))))
+    mirrored-image))
+
 (def image (load-image "./resources/images/input.png"))
 
-(save-image (resize-image image 400 225) "./resources/images/resized.png")
-
-(save-image (scale-image image 2.0) "./resources/images/scaled.png")
-
-(save-image (crop-image image 100 100 200 200) "./resources/images/cropped.png")
-
-(save-image (rotate-image image (/ Math/PI 2)) "./resources/images/rotated.png")
+;(save-image (resize-image image 400 225) "./resources/images/resized.png")
+;(save-image (scale-image image 2.0) "./resources/images/scaled.png")
+;(save-image (crop-image image 100 100 200 200) "./resources/images/cropped.png")
+;(save-image (rotate-image image (/ Math/PI 2)) "./resources/images/rotated.png")
+;(save-image (mirror-image image) "./resources/images/mirrored.png")
