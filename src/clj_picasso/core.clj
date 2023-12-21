@@ -96,12 +96,12 @@
 
 (defn ^BufferedImage generate-random-image [width height]
   "Generate a random image with the specified width and height."
-  (let [img (BufferedImage. width height BufferedImage/TYPE_INT_ARGB)]
+  (let [image (BufferedImage. width height BufferedImage/TYPE_INT_ARGB)]
     (doseq [y (range height)]
       (doseq [x (range width)]
         (let [pixel (generate-random-pixel)]
-          (.setRGB img x y pixel))))
-    img))
+          (.setRGB image x y pixel))))
+    image))
 
 (def image (load-image "./resources/images/input.png"))
 
@@ -111,3 +111,4 @@
 ;(save-image (rotate-image image (/ Math/PI 2)) "./resources/images/rotated.png")
 ;(save-image (mirror-image image) "./resources/images/mirrored.png")
 ;(save-image (generate-random-image 250 250) "./resources/images/random.png")
+;(save-image (convert-to-grayscale image) "./resources/images/grayscale.png")
