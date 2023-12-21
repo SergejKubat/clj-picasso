@@ -6,14 +6,26 @@
 ;;   the terms of this license.
 ;;   You must not remove this notice, or any other, from this software.
 
-(ns clj-picasso.filters
+(ns ^{:author "Sergej Kubat"}
+  clj-picasso.filters
   (:import (java.awt.image BufferedImage)))
 
-(defn create-pixel [red green blue]
-  "Create new pixel value."
-  (bit-or (bit-shift-left red 16)
-          (bit-shift-left green 8)
-          blue))
+(defn clamp [value min-value max-value]
+  "Clamp the value to the specified range."
+  (max min-value (min value max-value)))
+
+(defn create-pixel
+  ([red green blue]
+   "Create new RGB pixel value."
+   (bit-or (bit-shift-left red 16)
+           (bit-shift-left green 8)
+           blue))
+  ([alpha red green blue]
+   "Create new ARGB pixel value"
+   (bit-or (bit-shift-left alpha 24)
+           (bit-shift-left red 16)
+           (bit-shift-left green 8)
+           blue)))
 
 (defn ^BufferedImage convert-to-grayscale [^BufferedImage image]
   "Convert the given image to grayscale."
@@ -30,3 +42,39 @@
               gray-pixel (create-pixel average average average)]
           (.setRGB gray-image x y gray-pixel))))
     gray-image))
+
+(defn ^BufferedImage convert-to-negative [^BufferedImage image]
+  "Convert the given image to negative."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        negative-image (BufferedImage. width height (.getType image))]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [pixel (.getRGB image x y)
+              red (bit-and (bit-shift-right pixel 16) 0xFF)
+              green (bit-and (bit-shift-right pixel 8) 0xFF)
+              blue (bit-and pixel 0xFF)
+              new-red (- 255 red)
+              new-green (- 255 green)
+              new-blue (- 255 blue)
+              new-pixel (create-pixel new-red new-green new-blue)]
+          (.setRGB negative-image x y new-pixel))))
+    negative-image))
+
+(defn ^BufferedImage convert-to-sepia [^BufferedImage image]
+  "Convert the given image to sepia."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        sepia-image (BufferedImage. width height (.getType image))]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [pixel (.getRGB image x y)
+              red (bit-and (bit-shift-right pixel 16) 0xFF)
+              green (bit-and (bit-shift-right pixel 8) 0xFF)
+              blue (bit-and pixel 0xFF)
+              new-red (min (int (+ (* 0.393 red) (* 0.769 green) (* 0.189 blue))) 255)
+              new-green (min (int (+ (* 0.349 red) (* 0.686 green) (* 0.168 blue))) 255)
+              new-blue (min (int (+ (* 0.272 red) (* 0.534 green) (* 0.131 blue))) 255)
+              new-pixel (create-pixel new-red new-green new-blue)]
+          (.setRGB sepia-image x y new-pixel))))
+    sepia-image))
