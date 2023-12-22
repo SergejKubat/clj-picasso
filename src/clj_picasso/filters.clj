@@ -116,7 +116,7 @@
   (let [width (.getWidth image)
         height (.getHeight image)
         mean-intensity (double (calculate-mean-intensity image width height))
-        contrasted-image (BufferedImage. width height BufferedImage/TYPE_INT_RGB)]
+        contrasted-image (BufferedImage. width height (.getType image))]
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel (.getRGB image x y)
@@ -129,3 +129,24 @@
               new-pixel (create-pixel new-red new-green new-blue)]
           (.setRGB contrasted-image x y new-pixel))))
     contrasted-image))
+
+(defn ^BufferedImage convert-to-one-channel [^BufferedImage image ^String color-type]
+  "Convert colored image to an image with either red effect, green effect, or blue effect."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        one-channel-image (BufferedImage. width height (.getType image))]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [pixel (.getRGB image x y)]
+          (case color-type
+            "red" (let [red (bit-and (bit-shift-right pixel 16) 0xFF)
+                        new-pixel (create-pixel red 0 0)]
+                    (.setRGB one-channel-image x y new-pixel))
+            "green" (let [green (bit-and (bit-shift-right pixel 8) 0xFF)
+                          new-pixel (create-pixel 0 green 0)]
+                      (.setRGB one-channel-image x y new-pixel))
+            "blue" (let [blue (bit-and pixel 0xFF)
+                         new-pixel (create-pixel 0 0 blue)]
+                     (.setRGB one-channel-image x y new-pixel))
+            ))))
+    one-channel-image))

@@ -116,3 +116,6 @@
 ;(save-image (convert-to-sepia image) "./resources/images/sepia.png")
 ;(save-image (adjust-brightness image 1.5) "./resources/images/brightness.png")
 ;(save-image (adjust-contrast image 1.5) "./resources/images/contrast.png")
+;(save-image (convert-to-one-channel image "red") "./resources/images/red.png")
+;(save-image (convert-to-one-channel image "green") "./resources/images/green.png")
+;(save-image (convert-to-one-channel image "blue") "./resources/images/blue.png")
