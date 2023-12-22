@@ -154,13 +154,13 @@
 (defn get-neighborhoods [^BufferedImage image width height x y size]
   "Get the pixel values in the neighborhood of the specified coordinates."
   (let [half-size (/ size 2)
-        neighborhood (for [dx (range (- x half-size) (+ x half-size 1))]
+        neighborhoods (for [dx (range (- x half-size) (+ x half-size 1))]
                        (for [dy (range (- y half-size) (+ y half-size 1))]
                          (let [clamped-x (clamp dx 0 (dec width))
                                clamped-y (clamp dy 0 (dec height))
                                pixel (.getRGB image clamped-x clamped-y)]
                            (bit-and (bit-shift-right pixel 16) 0xFF))))]
-    neighborhood))
+    neighborhoods))
 
 (defn ^BufferedImage apply-median-filter [^BufferedImage image ^long size]
   "Apply a median filter to the given image with the specified neighborhood size."
@@ -175,3 +175,25 @@
               new-pixel (create-pixel median-value median-value median-value)]
           (.setRGB filtered-image x y new-pixel))))
     filtered-image))
+
+(defn calculate-average-color [neighborhoods]
+  "Calculate the average color of a neighborhoods of pixels."
+  (let [total-pixels (count neighborhoods)
+        total-red (apply + (map #(nth % 0) neighborhoods))
+        total-green (apply + (map #(nth % 1) neighborhoods))
+        total-blue (apply + (map #(nth % 2) neighborhoods))]
+    (create-pixel (int (/ total-red total-pixels))
+                  (int (/ total-green total-pixels))
+                  (int (/ total-blue total-pixels)))))
+
+(defn ^BufferedImage apply-blur-filter [^BufferedImage image ^long size]
+  "Apply blur filter to the given image with the specified neighborhood size."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        blurred-image (BufferedImage. width height (.getType image))]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [neighborhoods (get-neighborhoods image width height x y size)
+              average-color (calculate-average-color neighborhoods)]
+          (.setRGB blurred-image x y average-color))))
+    blurred-image))
