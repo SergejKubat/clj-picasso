@@ -119,3 +119,4 @@
 ;(save-image (convert-to-one-channel image "red") "./resources/images/red.png")
 ;(save-image (convert-to-one-channel image "green") "./resources/images/green.png")
 ;(save-image (convert-to-one-channel image "blue") "./resources/images/blue.png")
+;(save-image (apply-median-filter image 2) "./resources/images/median.png")

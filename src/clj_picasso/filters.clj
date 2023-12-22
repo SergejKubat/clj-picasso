@@ -150,3 +150,28 @@
                      (.setRGB one-channel-image x y new-pixel))
             ))))
     one-channel-image))
+
+(defn get-neighborhoods [^BufferedImage image width height x y size]
+  "Get the pixel values in the neighborhood of the specified coordinates."
+  (let [half-size (/ size 2)
+        neighborhood (for [dx (range (- x half-size) (+ x half-size 1))]
+                       (for [dy (range (- y half-size) (+ y half-size 1))]
+                         (let [clamped-x (clamp dx 0 (dec width))
+                               clamped-y (clamp dy 0 (dec height))
+                               pixel (.getRGB image clamped-x clamped-y)]
+                           (bit-and (bit-shift-right pixel 16) 0xFF))))]
+    neighborhood))
+
+(defn ^BufferedImage apply-median-filter [^BufferedImage image ^long size]
+  "Apply a median filter to the given image with the specified neighborhood size."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        filtered-image (BufferedImage. width height (.getType image))]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [neighborhoods (flatten (get-neighborhoods image width height x y size))
+              sorted-neighborhood (sort neighborhoods)
+              median-value (nth sorted-neighborhood (/ (count sorted-neighborhood) 2))
+              new-pixel (create-pixel median-value median-value median-value)]
+          (.setRGB filtered-image x y new-pixel))))
+    filtered-image))
