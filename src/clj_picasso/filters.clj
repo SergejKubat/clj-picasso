@@ -78,3 +78,21 @@
               new-pixel (create-pixel new-red new-green new-blue)]
           (.setRGB sepia-image x y new-pixel))))
     sepia-image))
+
+(defn ^BufferedImage adjust-brightness [^BufferedImage image ^double factor]
+  "Adjust the brightness of the given image by the specified factor."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        adjusted-image (BufferedImage. width height (.getType image))]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [pixel (.getRGB image x y)
+              red (bit-and (bit-shift-right pixel 16) 0xFF)
+              green (bit-and (bit-shift-right pixel 8) 0xFF)
+              blue (bit-and pixel 0xFF)
+              new-red (int (clamp (* red factor) 0 255))
+              new-green (int (clamp (* green factor) 0 255))
+              new-blue (int (clamp (* blue factor) 0 255))
+              new-pixel (create-pixel new-red new-green new-blue)]
+          (.setRGB adjusted-image x y new-pixel))))
+    adjusted-image))

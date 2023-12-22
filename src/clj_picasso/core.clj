@@ -114,3 +114,4 @@
 ;(save-image (convert-to-grayscale image) "./resources/images/grayscale.png")
 ;(save-image (convert-to-negative image) "./resources/images/negative.png")
 ;(save-image (convert-to-sepia image) "./resources/images/sepia.png")
+;(save-image (adjust-brightness image 1.5) "./resources/images/brightness.png")
