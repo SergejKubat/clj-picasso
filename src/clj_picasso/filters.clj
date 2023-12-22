@@ -96,3 +96,36 @@
               new-pixel (create-pixel new-red new-green new-blue)]
           (.setRGB adjusted-image x y new-pixel))))
     adjusted-image))
+
+(defn calculate-mean-intensity [^BufferedImage image ^long width ^long height]
+  "Calculate the mean intensity of the given image."
+  (let [total-pixels (* width height)
+        total-intensity (reduce +
+                                (for [x (range width)
+                                      y (range height)]
+                                  (let [pixel (.getRGB image x y)
+                                        red (bit-and (bit-shift-right pixel 16) 0xFF)
+                                        green (bit-and (bit-shift-right pixel 8) 0xFF)
+                                        blue (bit-and pixel 0xFF)]
+                                    (+ red green blue))))
+        mean-intensity (double (/ total-intensity total-pixels))]
+    mean-intensity))
+
+(defn ^BufferedImage adjust-contrast [^BufferedImage image ^double factor]
+  "Adjust the contrast of the given image by modifying intensity values based on the mean intensity."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        mean-intensity (double (calculate-mean-intensity image width height))
+        contrasted-image (BufferedImage. width height BufferedImage/TYPE_INT_RGB)]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [pixel (.getRGB image x y)
+              red (bit-and (bit-shift-right pixel 16) 0xFF)
+              green (bit-and (bit-shift-right pixel 8) 0xFF)
+              blue (bit-and pixel 0xFF)
+              new-red (clamp (int (+ mean-intensity (* factor (- red mean-intensity)))) 0 255)
+              new-green (clamp (int (+ mean-intensity (* factor (- green mean-intensity)))) 0 255)
+              new-blue (clamp (int (+ mean-intensity (* factor (- blue mean-intensity)))) 0 255)
+              new-pixel (create-pixel new-red new-green new-blue)]
+          (.setRGB contrasted-image x y new-pixel))))
+    contrasted-image))
