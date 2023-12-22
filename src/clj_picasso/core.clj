@@ -103,23 +103,6 @@
           (.setRGB image x y pixel))))
     image))
 
-(defn clamp [value min-value max-value]
-  "Clamp the value to the specified range."
-  (max min-value (min value max-value)))
-
-(defn create-pixel
-  ([red green blue]
-   "Create new RGB pixel value."
-   (bit-or (bit-shift-left red 16)
-           (bit-shift-left green 8)
-           blue))
-  ([alpha red green blue]
-   "Create new ARGB pixel value"
-   (bit-or (bit-shift-left alpha 24)
-           (bit-shift-left red 16)
-           (bit-shift-left green 8)
-           blue)))
-
 (def image (load-image "./resources/images/input.png"))
 
 ;(save-image (resize-image image 400 225) "./resources/images/resized.png")
