@@ -28,6 +28,7 @@
   (let [pixel (hex-color-to-decimal color)]
     (get-pixel-channels pixel)))
 
+; @TODO: remove side-effects
 (defn ^BufferedImage draw-line-on-image [^BufferedImage image x1 y1 x2 y2 stroke ^String color]
   (let [^Graphics2D graphics (.getGraphics image)
         line (Line2D$Double. x1 y1 x2 y2)
@@ -39,6 +40,7 @@
     (.dispose graphics))
   image)
 
+; @TODO: remove side-effects
 (defn ^BufferedImage draw-rectangle-on-image [^BufferedImage image x y rectangle-width rectangle-height stroke ^String color]
   (let [^Graphics2D graphics (.getGraphics image)
         rectangle (Rectangle2D$Double. x y rectangle-width rectangle-height)
@@ -50,6 +52,7 @@
     (.dispose graphics))
   image)
 
+; @TODO: remove side-effects
 (defn ^BufferedImage draw-ellipse-on-image [^BufferedImage image x y ellipse-width ellipse-height stroke ^String color]
   (let [^Graphics2D graphics (.getGraphics image)
         ellipse (Ellipse2D$Double. x y ellipse-width ellipse-height)

@@ -124,3 +124,4 @@
 ;(save-image (draw-line-on-image image 100 175 400 175 10.0 "#b7ef7b") "./resources/images/drawn-line.png")
 ;(save-image (draw-rectangle-on-image image 20 20 200 100 10.0 "#000080") "./resources/images/drawn-rectangle.png")
 ;(save-image (draw-ellipse-on-image image 100 100 150 150 10.0 "#8a7443") "./resources/images/drawn-ellipse.png")
+;(save-image (set-watermark-text image 90 200 "Watermark" "Arial" 64 "#ffffff") "./resources/images/watermark-text.png")
