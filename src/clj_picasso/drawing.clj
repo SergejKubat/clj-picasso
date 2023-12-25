@@ -28,38 +28,47 @@
   (let [pixel (hex-color-to-decimal color)]
     (get-pixel-channels pixel)))
 
-; @TODO: remove side-effects
 (defn ^BufferedImage draw-line-on-image [^BufferedImage image x1 y1 x2 y2 stroke ^String color]
-  (let [^Graphics2D graphics (.getGraphics image)
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        output-image (BufferedImage. width height (.getType image))
+        ^Graphics2D graphics (.getGraphics output-image)
         line (Line2D$Double. x1 y1 x2 y2)
         channels (get-color-channels color)
         color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))]
+    (.drawImage graphics image 0 0 width height nil)
     (.setColor graphics color)
     (.setStroke graphics (BasicStroke. stroke))
     (.draw graphics line)
-    (.dispose graphics))
-  image)
+    (.dispose graphics)
+    output-image))
 
-; @TODO: remove side-effects
 (defn ^BufferedImage draw-rectangle-on-image [^BufferedImage image x y rectangle-width rectangle-height stroke ^String color]
-  (let [^Graphics2D graphics (.getGraphics image)
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        output-image (BufferedImage. width height (.getType image))
+        ^Graphics2D graphics (.getGraphics output-image)
         rectangle (Rectangle2D$Double. x y rectangle-width rectangle-height)
         channels (get-color-channels color)
         color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))]
+    (.drawImage graphics image 0 0 width height nil)
     (.setColor graphics color)
     (.setStroke graphics (BasicStroke. stroke))
     (.draw graphics rectangle)
-    (.dispose graphics))
-  image)
+    (.dispose graphics)
+    output-image))
 
-; @TODO: remove side-effects
 (defn ^BufferedImage draw-ellipse-on-image [^BufferedImage image x y ellipse-width ellipse-height stroke ^String color]
-  (let [^Graphics2D graphics (.getGraphics image)
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        output-image (BufferedImage. width height (.getType image))
+        ^Graphics2D graphics (.getGraphics output-image)
         ellipse (Ellipse2D$Double. x y ellipse-width ellipse-height)
         channels (get-color-channels color)
         color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))]
+    (.drawImage graphics image 0 0 width height nil)
     (.setColor graphics color)
     (.setStroke graphics (BasicStroke. stroke))
     (.draw graphics ellipse)
-    (.dispose graphics))
-  image)
+    (.dispose graphics)
+    output-image))
