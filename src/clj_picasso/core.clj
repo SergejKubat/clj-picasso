@@ -104,6 +104,7 @@
     image))
 
 (def ^BufferedImage image (load-image "./resources/images/input.png"))
+(def ^BufferedImage image2 (load-image "./resources/images/input-2.png"))
 (def ^BufferedImage watermark-image (load-image "./resources/images/watermark-example.png"))
 
 ;(save-image (resize-image image 400 225) "./resources/images/resized.png")
@@ -128,3 +129,4 @@
 ;(save-image (set-watermark-text image "Watermark" 90 200 "Arial" 64 "#ffffff") "./resources/images/watermark-text.png")
 ;(save-image (set-watermark-image image watermark-image 400 300) "./resources/images/watermark-image.png")
 ;(save-image (set-watermark-image image watermark-image) "./resources/images/watermark-image-tiled.png")
+;(save-image (overlay-images image image2 0.5) "./resources/images/overlay.png")

@@ -197,3 +197,26 @@
               average-color (calculate-average-color neighborhoods)]
           (.setRGB blurred-image x y average-color))))
     blurred-image))
+
+(defn ^BufferedImage overlay-images [^BufferedImage image1 ^BufferedImage image2 transparency]
+  "Overlay two images with adjustable transparency."
+  (let [width (.getWidth image1)
+        height (.getHeight image1)
+        overlayed-image (BufferedImage. width height (.getType image1))]
+    (doseq [x (range width)]
+      (doseq [y (range height)]
+        (let [pixel1 (.getRGB image1 x y)
+              red1 (bit-and (bit-shift-right pixel1 16) 0xFF)
+              green1 (bit-and (bit-shift-right pixel1 8) 0xFF)
+              blue1 (bit-and pixel1 0xFF)
+              pixel2 (.getRGB image2 x y)
+              red2 (bit-and (bit-shift-right pixel2 16) 0xFF)
+              green2 (bit-and (bit-shift-right pixel2 8) 0xFF)
+              blue2 (bit-and pixel2 0xFF)
+              alpha (int (* transparency 255))
+              new-pixel (create-pixel (int (+ (* (- 1.0 transparency) red1) (* transparency red2)))
+                                      (int (+ (* (- 1.0 transparency) green1) (* transparency green2)))
+                                      (int (+ (* (- 1.0 transparency) blue1) (* transparency blue2)))
+                                      alpha)]
+          (.setRGB overlayed-image x y new-pixel))))
+    overlayed-image))
