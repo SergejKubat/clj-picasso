@@ -11,7 +11,7 @@
   (:import (java.awt Font)
            (java.awt.image BufferedImage)))
 
-(defn ^BufferedImage set-watermark-text [^BufferedImage image x y ^String text ^String font-family font-size]
+(defn ^BufferedImage set-watermark-text [^BufferedImage image ^String text x y ^String font-family font-size]
   "Add a text watermark to the original image at the specified position, font family and font size."
   (let [width (.getWidth image)
         height (.getHeight image)
@@ -27,13 +27,28 @@
       (.dispose))
     watermarked-image))
 
-(defn ^BufferedImage set-watermark-image [^BufferedImage image ^BufferedImage watermark-image x y]
-  "Add a image watermark to the original image at the specified position."
-  (let [width (.getWidth image)
-        height (.getHeight image)
-        watermarked-image (BufferedImage. width height (.getType image))]
-    (doto (.createGraphics watermarked-image)
-      (.drawImage image 0 0 width height nil)
-      (.drawImage watermark-image (int x) (int y) nil)
-      (.dispose))
-    watermarked-image))
+(defn ^BufferedImage set-watermark-image
+  ([^BufferedImage image ^BufferedImage watermark-image x y]
+   "Add a image watermark to the original image at the specified position."
+   (let [width (.getWidth image)
+         height (.getHeight image)
+         watermarked-image (BufferedImage. width height (.getType image))]
+     (doto (.createGraphics watermarked-image)
+       (.drawImage image 0 0 width height nil)
+       (.drawImage watermark-image (int x) (int y) nil)
+       (.dispose))
+     watermarked-image))
+  ([^BufferedImage original-image ^BufferedImage watermark-image]
+   "Add a image watermark to the original image by tiling it."
+   (let [width (.getWidth original-image)
+         height (.getHeight original-image)
+         watermark-width (.getWidth watermark-image)
+         watermark-height (.getHeight watermark-image)
+         watermarked-image (BufferedImage. width height (.getType original-image))
+         graphics (.createGraphics watermarked-image)]
+     (.drawImage graphics original-image 0 0 nil)
+     (doseq [x (range (quot width watermark-width))]
+       (doseq [y (range (quot height watermark-height))]
+         (.drawImage graphics watermark-image (* (int x) watermark-width) (* (int y) watermark-height) nil)))
+     (.dispose graphics)
+     watermarked-image)))
