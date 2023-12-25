@@ -20,9 +20,9 @@
     (Integer/parseInt hex-without-hash 16)))
 
 (defn get-pixel-channels [^long pixel]
-  { :red (bit-and (bit-shift-right pixel 16) 0xFF)
-    :green (bit-and (bit-shift-right pixel 8) 0xFF)
-    :blue (bit-and pixel 0xFF)})
+  {:red   (bit-and (bit-shift-right pixel 16) 0xFF)
+   :green (bit-and (bit-shift-right pixel 8) 0xFF)
+   :blue  (bit-and pixel 0xFF)})
 
 (defn get-color-channels [^String color]
   (let [pixel (hex-color-to-decimal color)]

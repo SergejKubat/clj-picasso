@@ -155,11 +155,11 @@
   "Get the pixel values in the neighborhood of the specified coordinates."
   (let [half-size (/ size 2)
         neighborhoods (for [dx (range (- x half-size) (+ x half-size 1))]
-                       (for [dy (range (- y half-size) (+ y half-size 1))]
-                         (let [clamped-x (clamp dx 0 (dec width))
-                               clamped-y (clamp dy 0 (dec height))
-                               pixel (.getRGB image clamped-x clamped-y)]
-                           (bit-and (bit-shift-right pixel 16) 0xFF))))]
+                        (for [dy (range (- y half-size) (+ y half-size 1))]
+                          (let [clamped-x (clamp dx 0 (dec width))
+                                clamped-y (clamp dy 0 (dec height))
+                                pixel (.getRGB image clamped-x clamped-y)]
+                            (bit-and (bit-shift-right pixel 16) 0xFF))))]
     neighborhoods))
 
 (defn ^BufferedImage apply-median-filter [^BufferedImage image ^long size]

@@ -12,16 +12,28 @@
            (java.awt.image BufferedImage)))
 
 (defn ^BufferedImage set-watermark-text [^BufferedImage image x y ^String text ^String font-family font-size]
+  "Add a text watermark to the original image at the specified position, font family and font size."
   (let [width (.getWidth image)
         height (.getHeight image)
-        marked-image (BufferedImage. width height (.getType image))
+        watermarked-image (BufferedImage. width height (.getType image))
         ; channels (get-color-channels color)
         ; color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))
         ]
-    (doto (.createGraphics marked-image)
+    (doto (.createGraphics watermarked-image)
       (.drawImage image 0 0 width height nil)
       (.setFont (Font. font-family Font/PLAIN font-size))
       ; (.setColor color)
       (.drawString text (int x) (int y))
       (.dispose))
-    marked-image))
+    watermarked-image))
+
+(defn ^BufferedImage set-watermark-image [^BufferedImage image ^BufferedImage watermark-image x y]
+  "Add a image watermark to the original image at the specified position."
+  (let [width (.getWidth image)
+        height (.getHeight image)
+        watermarked-image (BufferedImage. width height (.getType image))]
+    (doto (.createGraphics watermarked-image)
+      (.drawImage image 0 0 width height nil)
+      (.drawImage watermark-image (int x) (int y) nil)
+      (.dispose))
+    watermarked-image))

@@ -10,8 +10,8 @@
   clj-picasso.core
   (:import (java.awt.geom AffineTransform)
            (java.awt.image BufferedImage)
-           [javax.imageio ImageIO]
-           [java.io File IOException]))
+           (java.io File IOException)
+           (javax.imageio ImageIO)))
 
 (defn ^BufferedImage load-image [^String file-path]
   "Load an image from specified file path."
@@ -19,7 +19,7 @@
     (let [image (ImageIO/read (File. (str file-path)))]
       image)
     (catch IOException ex
-           (println (str "Error loading image: " (.getMessage ex)))
+      (println (str "Error loading image: " (.getMessage ex)))
       nil)))
 
 (defn save-image [^BufferedImage image ^String file-path]
@@ -103,7 +103,8 @@
           (.setRGB image x y pixel))))
     image))
 
-(def image (load-image "./resources/images/input.png"))
+(def ^BufferedImage image (load-image "./resources/images/input.png"))
+(def ^BufferedImage watermark-image (load-image "./resources/images/watermark-example.png"))
 
 ;(save-image (resize-image image 400 225) "./resources/images/resized.png")
 ;(save-image (scale-image image 2.0) "./resources/images/scaled.png")
@@ -125,3 +126,4 @@
 ;(save-image (draw-rectangle-on-image image 20 20 200 100 10.0 "#000080") "./resources/images/drawn-rectangle.png")
 ;(save-image (draw-ellipse-on-image image 100 100 150 150 10.0 "#8a7443") "./resources/images/drawn-ellipse.png")
 ;(save-image (set-watermark-text image 90 200 "Watermark" "Arial" 64 "#ffffff") "./resources/images/watermark-text.png")
+;(save-image (set-watermark-image image watermark-image 400 300) "./resources/images/watermark-image.png")
