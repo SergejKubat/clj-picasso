@@ -214,9 +214,9 @@
               green2 (bit-and (bit-shift-right pixel2 8) 0xFF)
               blue2 (bit-and pixel2 0xFF)
               alpha (int (* transparency 255))
-              new-pixel (create-pixel (int (+ (* (- 1.0 transparency) red1) (* transparency red2)))
+              new-pixel (create-pixel alpha
+                                      (int (+ (* (- 1.0 transparency) red1) (* transparency red2)))
                                       (int (+ (* (- 1.0 transparency) green1) (* transparency green2)))
-                                      (int (+ (* (- 1.0 transparency) blue1) (* transparency blue2)))
-                                      alpha)]
+                                      (int (+ (* (- 1.0 transparency) blue1) (* transparency blue2))))]
           (.setRGB overlayed-image x y new-pixel))))
     overlayed-image))
