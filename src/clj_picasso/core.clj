@@ -8,6 +8,8 @@
 
 (ns ^{:author "Sergej Kubat"}
   clj-picasso.core
+  (:require [clojure.java.io :as io]
+            [clj-picasso.filters :as filters])
   (:import (java.awt.geom AffineTransform)
            (java.awt.image BufferedImage)
            (java.io File IOException)
@@ -130,3 +132,23 @@
 ;(save-image (set-watermark-image image watermark-image 400 300) "./resources/images/watermark-image.png")
 ;(save-image (set-watermark-image image watermark-image) "./resources/images/watermark-image-tiled.png")
 ;(save-image (overlay-images image image2 0.5) "./resources/images/overlay.png")
+
+(defn get-all-files [^String directory]
+  (->> (file-seq (io/file directory))
+       (filter #(not (.isDirectory ^File %)))))
+
+(defn process-images-in-directory [^String directory process-fn]
+  (let [image-files (get-all-files directory)]
+    (doseq [image-file image-files]
+      (process-fn image-file))))
+
+; example process function
+(defn process-image [^File image-file]
+  (let [image (load-image image-file)
+        cropped-image (crop-image image 0 0 250 250)
+        mirrored-image (mirror-image cropped-image)
+        sepia-image (filters/convert-to-sepia mirrored-image)
+        output-path (.getParent image-file)]
+    (save-image sepia-image (str output-path "/processed_" (.getName image-file)))))
+
+; (process-images-in-directory "./resources/images/process" process-image)
