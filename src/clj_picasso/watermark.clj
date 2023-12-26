@@ -8,21 +8,21 @@
 
 (ns ^{:author "Sergej Kubat"}
   clj-picasso.watermark
-  (:import (java.awt Font)
+  (:require [clj-picasso.utils :as utils])
+  (:import (java.awt Color Font)
            (java.awt.image BufferedImage)))
 
-(defn ^BufferedImage set-watermark-text [^BufferedImage image ^String text x y ^String font-family font-size]
+(defn ^BufferedImage set-watermark-text [^BufferedImage image ^String text x y ^String font-family font-size color]
   "Add a text watermark to the original image at the specified position, font family and font size."
   (let [width (.getWidth image)
         height (.getHeight image)
         watermarked-image (BufferedImage. width height (.getType image))
-        ; channels (get-color-channels color)
-        ; color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))
-        ]
+        channels (utils/get-color-channels color)
+        rgb (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))]
     (doto (.createGraphics watermarked-image)
       (.drawImage image 0 0 width height nil)
       (.setFont (Font. font-family Font/PLAIN font-size))
-      ; (.setColor color)
+      (.setColor rgb)
       (.drawString text (int x) (int y))
       (.dispose))
     watermarked-image))

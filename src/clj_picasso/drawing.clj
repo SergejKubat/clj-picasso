@@ -8,33 +8,18 @@
 
 (ns ^{:author "Sergej Kubat"}
   clj-picasso.drawing
-  (:require [clojure.string :as string])
+  (:require [clj-picasso.utils :as utils])
   (:import (java.awt BasicStroke Color Graphics2D)
            (java.awt.geom Ellipse2D$Double Line2D$Double Rectangle2D$Double)
            (java.awt.image BufferedImage)))
 
-(defn hex-color-to-decimal [hex-color]
-  (let [hex-without-hash (if (string/starts-with? hex-color "#")
-                           (subs hex-color 1)
-                           hex-color)]
-    (Integer/parseInt hex-without-hash 16)))
-
-(defn get-pixel-channels [^long pixel]
-  {:red   (bit-and (bit-shift-right pixel 16) 0xFF)
-   :green (bit-and (bit-shift-right pixel 8) 0xFF)
-   :blue  (bit-and pixel 0xFF)})
-
-(defn get-color-channels [^String color]
-  (let [pixel (hex-color-to-decimal color)]
-    (get-pixel-channels pixel)))
-
-(defn ^BufferedImage draw-line-on-image [^BufferedImage image x1 y1 x2 y2 stroke ^String color]
+(defn ^BufferedImage draw-line [^BufferedImage image x1 y1 x2 y2 stroke ^String color]
   (let [width (.getWidth image)
         height (.getHeight image)
         output-image (BufferedImage. width height (.getType image))
         ^Graphics2D graphics (.getGraphics output-image)
         line (Line2D$Double. x1 y1 x2 y2)
-        channels (get-color-channels color)
+        channels (utils/get-color-channels color)
         color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))]
     (.drawImage graphics image 0 0 width height nil)
     (.setColor graphics color)
@@ -43,13 +28,13 @@
     (.dispose graphics)
     output-image))
 
-(defn ^BufferedImage draw-rectangle-on-image [^BufferedImage image x y rectangle-width rectangle-height stroke ^String color]
+(defn ^BufferedImage draw-rectangle [^BufferedImage image x y rectangle-width rectangle-height stroke ^String color]
   (let [width (.getWidth image)
         height (.getHeight image)
         output-image (BufferedImage. width height (.getType image))
         ^Graphics2D graphics (.getGraphics output-image)
         rectangle (Rectangle2D$Double. x y rectangle-width rectangle-height)
-        channels (get-color-channels color)
+        channels (utils/get-color-channels color)
         color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))]
     (.drawImage graphics image 0 0 width height nil)
     (.setColor graphics color)
@@ -58,13 +43,13 @@
     (.dispose graphics)
     output-image))
 
-(defn ^BufferedImage draw-ellipse-on-image [^BufferedImage image x y ellipse-width ellipse-height stroke ^String color]
+(defn ^BufferedImage draw-ellipse [^BufferedImage image x y ellipse-width ellipse-height stroke ^String color]
   (let [width (.getWidth image)
         height (.getHeight image)
         output-image (BufferedImage. width height (.getType image))
         ^Graphics2D graphics (.getGraphics output-image)
         ellipse (Ellipse2D$Double. x y ellipse-width ellipse-height)
-        channels (get-color-channels color)
+        channels (utils/get-color-channels color)
         color (Color. (int (:red channels)) (int (:green channels)) (int (:blue channels)))]
     (.drawImage graphics image 0 0 width height nil)
     (.setColor graphics color)

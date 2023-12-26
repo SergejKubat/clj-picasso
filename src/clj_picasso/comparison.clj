@@ -7,7 +7,7 @@
 ;;   You must not remove this notice, or any other, from this software.
 
 (ns ^{:author "Sergej Kubat"}
-  clj-picasso.comparisons
+  clj-picasso.comparison
   (:import (java.awt.image BufferedImage)))
 
 (defn ^BufferedImage mean-squared-error [^BufferedImage image1 ^BufferedImage image2]
