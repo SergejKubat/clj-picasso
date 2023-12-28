@@ -50,10 +50,8 @@
                                 (for [x (range width)
                                       y (range height)]
                                   (let [pixel (.getRGB image x y)
-                                        red (bit-and (bit-shift-right pixel 16) 0xFF)
-                                        green (bit-and (bit-shift-right pixel 8) 0xFF)
-                                        blue (bit-and pixel 0xFF)]
-                                    (+ red green blue))))
+                                        channels (get-pixel-channels pixel)]
+                                    (+ (int (:red channels)) (int (:green channels)) (int (:blue channels))))))
         mean-intensity (double (/ (int total-intensity) (int total-pixels)))]
     mean-intensity))
 
@@ -82,11 +80,7 @@
 
 (defn generate-random-pixel []
   "Generate pixel with random channel values."
-  (let [alpha (int (rand-int 256))
-        red (int (rand-int 256))
-        green (int (rand-int 256))
-        blue (int (rand-int 256))]
-    (bit-or (bit-shift-left alpha 24)
-            (bit-shift-left red 16)
-            (bit-shift-left green 8)
-            blue)))
+  (bit-or (bit-shift-left (int (rand-int 256)) 24)
+          (bit-shift-left (int (rand-int 256)) 16)
+          (bit-shift-left (int (rand-int 256)) 8)
+          (int (rand-int 256))))

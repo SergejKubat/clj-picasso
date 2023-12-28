@@ -19,17 +19,13 @@
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel1 (.getRGB image1 x y)
-              red1 (bit-and (bit-shift-right pixel1 16) 0xFF)
-              green1 (bit-and (bit-shift-right pixel1 8) 0xFF)
-              blue1 (bit-and pixel1 0xFF)
               pixel2 (.getRGB image2 x y)
-              red2 (bit-and (bit-shift-right pixel2 16) 0xFF)
-              green2 (bit-and (bit-shift-right pixel2 8) 0xFF)
-              blue2 (bit-and pixel2 0xFF)
+              channels1 (utils/get-pixel-channels pixel1)
+              channels2 (utils/get-pixel-channels pixel2)
               alpha (int (* transparency 255))
               new-pixel (utils/create-pixel alpha
-                                      (int (+ (* (- 1.0 transparency) red1) (* transparency red2)))
-                                      (int (+ (* (- 1.0 transparency) green1) (* transparency green2)))
-                                      (int (+ (* (- 1.0 transparency) blue1) (* transparency blue2))))]
+                                      (int (+ (* (- 1.0 transparency) (int (:red channels1))) (* transparency (int (:red channels2)))))
+                                      (int (+ (* (- 1.0 transparency) (int (:green channels1))) (* transparency (int (:green channels2)))))
+                                      (int (+ (* (- 1.0 transparency) (int (:blue channels1))) (* transparency (int (:blue channels2))))))]
           (.setRGB output-image x y new-pixel))))
     output-image))

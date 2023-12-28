@@ -19,10 +19,8 @@
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel (.getRGB image x y)
-              red (bit-and (bit-shift-right pixel 16) 0xFF)
-              green (bit-and (bit-shift-right pixel 8) 0xFF)
-              blue (bit-and pixel 0xFF)
-              average (int (/ (+ red green blue) 3))
+              channels (utils/get-pixel-channels pixel)
+              average (int (/ (+ (int (:red channels)) (int (:green channels)) (int (:blue channels))) 3))
               gray-pixel (utils/create-pixel average average average)]
           (.setRGB gray-image x y gray-pixel))))
     gray-image))
@@ -35,12 +33,13 @@
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel (.getRGB image x y)
-              red (bit-and (bit-shift-right pixel 16) 0xFF)
-              green (bit-and (bit-shift-right pixel 8) 0xFF)
-              blue (bit-and pixel 0xFF)
-              new-red (min (int (+ (* 0.393 red) (* 0.769 green) (* 0.189 blue))) 255)
-              new-green (min (int (+ (* 0.349 red) (* 0.686 green) (* 0.168 blue))) 255)
-              new-blue (min (int (+ (* 0.272 red) (* 0.534 green) (* 0.131 blue))) 255)
+              channels (utils/get-pixel-channels pixel)
+              new-red (min (int (+ (* 0.393 (int (:red channels))) (* 0.769 (int (:green channels))) (* 0.189 (int (:blue channels)))))
+                           255)
+              new-green (min (int (+ (* 0.349 (int (:red channels))) (* 0.686 (int (:green channels))) (* 0.168 (int (:blue channels)))))
+                             255)
+              new-blue (min (int (+ (* 0.272 (int (:red channels))) (* 0.534 (int (:green channels))) (* 0.131 (int (:blue channels)))))
+                            255)
               new-pixel (utils/create-pixel new-red new-green new-blue)]
           (.setRGB sepia-image x y new-pixel))))
     sepia-image))
@@ -53,12 +52,10 @@
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel (.getRGB image x y)
-              red (bit-and (bit-shift-right pixel 16) 0xFF)
-              green (bit-and (bit-shift-right pixel 8) 0xFF)
-              blue (bit-and pixel 0xFF)
-              new-red (- 255 red)
-              new-green (- 255 green)
-              new-blue (- 255 blue)
+              channels (utils/get-pixel-channels pixel)
+              new-red (- 255 (int (:red channels)))
+              new-green (- 255 (int (:green channels)))
+              new-blue (- 255 (int (:blue channels)))
               new-pixel (utils/create-pixel new-red new-green new-blue)]
           (.setRGB negative-image x y new-pixel))))
     negative-image))
@@ -118,12 +115,10 @@
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel (.getRGB image x y)
-              red (bit-and (bit-shift-right pixel 16) 0xFF)
-              green (bit-and (bit-shift-right pixel 8) 0xFF)
-              blue (bit-and pixel 0xFF)
-              new-red (int (utils/clamp (* red factor) 0 255))
-              new-green (int (utils/clamp (* green factor) 0 255))
-              new-blue (int (utils/clamp (* blue factor) 0 255))
+              channels (utils/get-pixel-channels pixel)
+              new-red (int (utils/clamp (* (int (:red channels)) factor) 0 255))
+              new-green (int (utils/clamp (* (int (:green channels)) factor) 0 255))
+              new-blue (int (utils/clamp (* (int (:blue channels)) factor) 0 255))
               new-pixel (utils/create-pixel new-red new-green new-blue)]
           (.setRGB adjusted-image x y new-pixel))))
     adjusted-image))
@@ -137,12 +132,13 @@
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel (.getRGB image x y)
-              red (bit-and (bit-shift-right pixel 16) 0xFF)
-              green (bit-and (bit-shift-right pixel 8) 0xFF)
-              blue (bit-and pixel 0xFF)
-              new-red (utils/clamp (int (+ mean-intensity (* factor (- red mean-intensity)))) 0 255)
-              new-green (utils/clamp (int (+ mean-intensity (* factor (- green mean-intensity)))) 0 255)
-              new-blue (utils/clamp (int (+ mean-intensity (* factor (- blue mean-intensity)))) 0 255)
+              channels (utils/get-pixel-channels pixel)
+              new-red (utils/clamp (int (+ mean-intensity (* factor (- (int (:red channels)) mean-intensity))))
+                                   0 255)
+              new-green (utils/clamp (int (+ mean-intensity (* factor (- (int (:green channels)) mean-intensity))))
+                                     0 255)
+              new-blue (utils/clamp (int (+ mean-intensity (* factor (- (int (:blue channels)) mean-intensity))))
+                                    0 255)
               new-pixel (utils/create-pixel new-red new-green new-blue)]
           (.setRGB contrasted-image x y new-pixel))))
     contrasted-image))

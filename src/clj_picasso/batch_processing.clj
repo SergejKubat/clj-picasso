@@ -21,7 +21,7 @@
       (process-fn image-file))))
 
 ;(defn process-image [^File image-file]
-;  (let [image (load-image image-file)
+;  (let [image (load-from-file image-file)
 ;        cropped-image (crop-image image 0 0 250 250)
 ;        mirrored-image (mirror-image cropped-image)
 ;        sepia-image (filters/convert-to-sepia mirrored-image)
