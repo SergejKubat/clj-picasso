@@ -1,3 +1,3 @@
 (ns clj-picasso.core-test
-  (:require [clojure.test :refer :all]
+  (:require [midje.sweet :refer :all]
             [clj-picasso.core :refer :all]))
