@@ -11,7 +11,7 @@
   (:require [clj-picasso.utils :as utils])
   (:import (java.awt.image BufferedImage)))
 
-(defn ^BufferedImage overlay-images [^BufferedImage image1 ^BufferedImage image2 transparency]
+(defn ^BufferedImage overlay-images [^BufferedImage image1 ^BufferedImage image2 ^double transparency]
   "Overlay two images with adjustable transparency."
   (let [width (.getWidth image1)
         height (.getHeight image1)
