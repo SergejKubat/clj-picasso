@@ -15,7 +15,7 @@
   "Overlay two images with adjustable transparency."
   (let [width (.getWidth image1)
         height (.getHeight image1)
-        overlayed-image (BufferedImage. width height (.getType image1))]
+        output-image (BufferedImage. width height (.getType image1))]
     (doseq [x (range width)]
       (doseq [y (range height)]
         (let [pixel1 (.getRGB image1 x y)
@@ -31,5 +31,5 @@
                                       (int (+ (* (- 1.0 transparency) red1) (* transparency red2)))
                                       (int (+ (* (- 1.0 transparency) green1) (* transparency green2)))
                                       (int (+ (* (- 1.0 transparency) blue1) (* transparency blue2))))]
-          (.setRGB overlayed-image x y new-pixel))))
-    overlayed-image))
+          (.setRGB output-image x y new-pixel))))
+    output-image))

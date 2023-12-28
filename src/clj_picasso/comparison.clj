@@ -34,4 +34,4 @@
                                         mse (+ (* red-diff red-diff) (* green-diff green-diff) (* blue-diff blue-diff))]
                                     mse)))]
         (double (/ sum (* 3 pixels-count))))
-      (throw (IllegalArgumentException. "Image dimensions do not match")))))
+      (throw (IllegalArgumentException. "Image dimensions do not match.")))))

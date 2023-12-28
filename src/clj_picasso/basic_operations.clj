@@ -32,22 +32,29 @@
       (.dispose))
     scaled-image))
 
-(defn ^BufferedImage crop-image [^BufferedImage image x y width height]
-  "Crop the given image to the specified region."
-  (let [cropped-image (BufferedImage. width height (.getType image))]
-    (doto (.createGraphics cropped-image)
-      (.drawImage image 0 0 width height x y (+ (int x) (int width)) (+ (int y) (int height)) nil)
-      (.dispose))
-    cropped-image))
+(defn ^BufferedImage crop-image
+  ([^BufferedImage image x y width height]
+   "Crop the given image to the specified region."
+   (let [original-width (.getWidth image)
+         original-height (.getHeight image)]
+     (if (and (<= (+ (int x) (int width)) original-width) (<= (+ (int y) (int height)) original-height))
+       (let [cropped-image (BufferedImage. width height (.getType image))]
+         (doto (.createGraphics cropped-image)
+           (.drawImage image 0 0 width height x y (+ (int x) (int width)) (+ (int y) (int height)) nil)
+           (.dispose))
+         cropped-image)
+       (throw (IllegalArgumentException. "Image dimensions are too small.")))))
+  ([^BufferedImage image width height]
+   (crop-image image 0 0 width height)))
 
-(defn ^BufferedImage rotate-image [^BufferedImage image angle]
+(defn ^BufferedImage rotate-image [^BufferedImage image ^double angle]
   "Rotate the given image by the specified angle in radians."
   (let [width (.getWidth image)
         height (.getHeight image)
         rotated-image (BufferedImage. width height (.getType image))]
     (let [graphics (.createGraphics rotated-image)
           transform (AffineTransform.)]
-      (.rotate transform angle (/ width 2) (/ height 2))
+      (.rotate transform (Math/toRadians angle) (/ width 2) (/ height 2))
       (.drawImage graphics image transform nil)
       (.dispose graphics))
     rotated-image))
