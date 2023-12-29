@@ -11,6 +11,14 @@
   (:require [clj-picasso.utils :as utils])
   (:import (java.awt.image BufferedImage)))
 
+(defn ^boolean equal-images? [^BufferedImage img1 ^BufferedImage img2]
+  (and (= (.getWidth img1) (.getWidth img2))
+       (= (.getHeight img1) (.getHeight img2))
+       (every? true?
+               (flatten (for [x (range (.getWidth img1))]
+                          (for [y (range (.getHeight img1))]
+                            (= (.getRGB img1 x y) (.getRGB img2 x y))))))))
+
 (defn ^BufferedImage mean-squared-error [^BufferedImage image1 ^BufferedImage image2]
   "Calculate the mean squared error between two images."
   (let [width1 (.getWidth image1)
