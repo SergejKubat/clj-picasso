@@ -18,11 +18,14 @@
         output-image (BufferedImage. width height (.getType image1))]
     (doseq [x (range width)]
       (doseq [y (range height)]
+        ;; get the pixels and color channels of the two images at the current position
         (let [pixel1 (.getRGB image1 x y)
               pixel2 (.getRGB image2 x y)
               channels1 (utils/get-pixel-channels pixel1)
               channels2 (utils/get-pixel-channels pixel2)
+              ;; calculate the alpha value based on the specified transparency
               alpha (int (* transparency 255))
+              ;; calculate new color values for each channel using the overlay formula
               new-pixel (utils/create-pixel alpha
                                       (int (+ (* (- 1.0 transparency) (int (:red channels1))) (* transparency (int (:red channels2)))))
                                       (int (+ (* (- 1.0 transparency) (int (:green channels1))) (* transparency (int (:green channels2)))))

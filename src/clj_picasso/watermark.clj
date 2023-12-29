@@ -13,8 +13,8 @@
            (java.awt.image BufferedImage)))
 
 (defn ^BufferedImage set-watermark-text
+  "Add a text watermark to the original image at the specified position, font family and font size."
   ([^BufferedImage image ^String text x y ^String font-family font-size ^String color]
-   "Add a text watermark to the original image at the specified position, font family and font size."
    (let [width (.getWidth image)
          height (.getHeight image)
          watermarked-image (BufferedImage. width height (.getType image))
@@ -27,16 +27,19 @@
        (.drawString text (int x) (int y))
        (.dispose))
      watermarked-image))
+  ;; default color is white
   ([^BufferedImage image ^String text x y ^String font-family font-size]
    (set-watermark-text image text x y font-family font-size "#ffffff"))
+  ;; default font size is 32 and color is white
   ([^BufferedImage image ^String text x y ^String font-family]
    (set-watermark-text image text x y font-family 32 "#ffffff"))
+  ;; default font family is Arial, font size is 32, and color is white
   ([^BufferedImage image ^String text x y]
    (set-watermark-text image text x y "Arial" 32 "#ffffff")))
 
 (defn ^BufferedImage set-watermark-image
+  "Add an image watermark to the original image at the specified position or by tiling it."
   ([^BufferedImage image ^BufferedImage watermark-image x y]
-   "Add a image watermark to the original image at the specified position."
    (let [width (.getWidth image)
          height (.getHeight image)
          watermarked-image (BufferedImage. width height (.getType image))]
@@ -45,8 +48,8 @@
        (.drawImage watermark-image (int x) (int y) nil)
        (.dispose))
      watermarked-image))
+  ;; tile watermark across the original image
   ([^BufferedImage original-image ^BufferedImage watermark-image]
-   "Add a image watermark to the original image by tiling it."
    (let [width (.getWidth original-image)
          height (.getHeight original-image)
          watermark-width (.getWidth watermark-image)

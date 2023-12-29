@@ -12,12 +12,12 @@
   (:import (java.awt.image BufferedImage)))
 
 (defn ^boolean equal-images? [^BufferedImage img1 ^BufferedImage img2]
-  (and (= (.getWidth img1) (.getWidth img2))
-       (= (.getHeight img1) (.getHeight img2))
+  (and (= (.getWidth img1) (.getWidth img2))                ;; check if widths are equal
+       (= (.getHeight img1) (.getHeight img2))              ;; check if heights are equal
        (every? true?
                (flatten (for [x (range (.getWidth img1))]
                           (for [y (range (.getHeight img1))]
-                            (= (.getRGB img1 x y) (.getRGB img2 x y))))))))
+                            (= (.getRGB img1 x y) (.getRGB img2 x y)))))))) ;; check if pixel values are equal
 
 (defn ^BufferedImage mean-squared-error [^BufferedImage image1 ^BufferedImage image2]
   "Calculate the mean squared error between two images."
@@ -33,10 +33,12 @@
                                         pixel2 (.getRGB image2 x y)
                                         channels1 (utils/get-pixel-channels pixel1)
                                         channels2 (utils/get-pixel-channels pixel2)
+                                        ;; calculate differences between RGB channels
                                         red-diff (- (int (:red channels1)) (int (:red channels2)))
                                         green-diff (- (int (:green channels1)) (int (:green channels2)))
                                         blue-diff (- (int (:blue channels1)) (int (:blue channels2)))
-                                        mse (+ (* red-diff red-diff) (* green-diff green-diff) (* blue-diff blue-diff))]
-                                    mse)))]
-        (double (/ sum (* 3 pixels-count))))
+                                        ;; sum of difference squares
+                                        sods (+ (* red-diff red-diff) (* green-diff green-diff) (* blue-diff blue-diff))]
+                                    sods)))]
+        (double (/ sum (* 3 pixels-count))))                ;; calculate mean squared error
       (throw (IllegalArgumentException. "Image dimensions do not match.")))))

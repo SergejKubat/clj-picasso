@@ -12,13 +12,16 @@
   (:import (java.io File)))
 
 (defn get-all-files [^String directory]
-  (->> (file-seq (io/file directory))
-       (filter #(not (.isDirectory ^File %)))))
+  "Takes a directory path as a parameter and returns a lazy sequence
+  of all files in that directory (excluding subdirectories)."
+  (->> (file-seq (io/file directory))                       ;; recursively traverse the directory
+       (filter #(not (.isDirectory ^File %)))))             ;; filter out directories
 
 (defn process-images-in-directory [^String directory process-fn]
+  "Takes a directory path as a parameter and process all images in that directory."
   (let [image-files (get-all-files directory)]
-    (doseq [image-file image-files]
-      (process-fn image-file))))
+    (doseq [image-file image-files]                         ;; iterate through image files
+      (process-fn image-file))))                            ;; apply process function to image file
 
 ;(defn process-image [^File image-file]
 ;  (let [image (load-from-file image-file)
