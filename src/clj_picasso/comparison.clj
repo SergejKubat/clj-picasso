@@ -12,6 +12,7 @@
   (:import (java.awt.image BufferedImage)))
 
 (defn ^boolean equal-images? [^BufferedImage img1 ^BufferedImage img2]
+  "Compare two images pixel by pixel."
   (and (= (.getWidth img1) (.getWidth img2))                ;; check if widths are equal
        (= (.getHeight img1) (.getHeight img2))              ;; check if heights are equal
        (every? true?

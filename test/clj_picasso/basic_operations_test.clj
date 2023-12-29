@@ -17,24 +17,24 @@
 (def ^BufferedImage image (loading/load-from-path "./resources/images/input.png"))
 
 (fact "Testing resize function."
-      (comp/equal-images? (bs/resize-image image 400 225) (loading/load-from-path "./resources/images/resized.png"))
+      (comp/equal-images? (bs/resize image 400 225) (loading/load-from-path "./resources/images/resized.png"))
       => true)
 
 (fact "Testing scale function."
-      (comp/equal-images? (bs/scale-image image 2.0) (loading/load-from-path "./resources/images/scaled.png"))
+      (comp/equal-images? (bs/scale image 2.0) (loading/load-from-path "./resources/images/scaled.png"))
       => true)
 
 (facts "Testing crop function."
-       (comp/equal-images? (bs/crop-image image 200 200) (loading/load-from-path "./resources/images/cropped.png"))
+       (comp/equal-images? (bs/crop image 200 200) (loading/load-from-path "./resources/images/cropped.png"))
        => true
-       (comp/equal-images? (bs/crop-image image 0 0 200 200) (loading/load-from-path "./resources/images/cropped.png"))
+       (comp/equal-images? (bs/crop image 0 0 200 200) (loading/load-from-path "./resources/images/cropped.png"))
        => true
-       (bs/crop-image image 1000 1000) => (throws IllegalArgumentException))
+       (bs/crop image 1000 1000) => (throws IllegalArgumentException))
 
 (fact "Testing rotate function."
-      (comp/equal-images? (bs/rotate-image image 180) (loading/load-from-path "./resources/images/rotated.png"))
+      (comp/equal-images? (bs/rotate image 180) (loading/load-from-path "./resources/images/rotated.png"))
       => true)
 
 (fact "Testing mirror function."
-      (comp/equal-images? (bs/mirror-image image) (loading/load-from-path "./resources/images/mirrored.png"))
+      (comp/equal-images? (bs/mirror image) (loading/load-from-path "./resources/images/mirrored.png"))
       => true)

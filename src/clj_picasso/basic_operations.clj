@@ -12,7 +12,7 @@
   (:import (java.awt.geom AffineTransform)
            (java.awt.image BufferedImage)))
 
-(defn ^BufferedImage resize-image [^BufferedImage image ^long width ^long height]
+(defn ^BufferedImage resize [^BufferedImage image ^long width ^long height]
   "Resize the given image to the specified width and height."
   (let [resized-image (BufferedImage. width height (.getType image))]
     ;; chain method calls on the Graphics2D object
@@ -21,7 +21,7 @@
       (.dispose))
     resized-image))
 
-(defn ^BufferedImage scale-image [^BufferedImage image ^double factor]
+(defn ^BufferedImage scale [^BufferedImage image ^double factor]
   "Scale the given image based on specified factor."
   (let [width (.getWidth image)
         height (.getHeight image)
@@ -34,7 +34,7 @@
       (.dispose))
     scaled-image))
 
-(defn ^BufferedImage crop-image
+(defn ^BufferedImage crop
   "Crop the given image to the specified region."
   ([^BufferedImage image x y width height]
    (let [original-width (.getWidth image)
@@ -50,9 +50,9 @@
          cropped-image)
        (throw (IllegalArgumentException. "Image dimensions are too small.")))))
   ([^BufferedImage image width height]
-   (crop-image image 0 0 width height)))
+   (crop image 0 0 width height)))
 
-(defn ^BufferedImage rotate-image [^BufferedImage image ^double angle]
+(defn ^BufferedImage rotate [^BufferedImage image ^double angle]
   "Rotate the given image by the specified angle."
   (let [width (.getWidth image)
         height (.getHeight image)
@@ -64,8 +64,8 @@
       (.dispose graphics))
     rotated-image))
 
-(defn ^BufferedImage mirror-image [^BufferedImage image]
-  "Create a mirror image from specified image."
+(defn ^BufferedImage mirror [^BufferedImage image]
+  "Create an mirror image from specified image."
   (let [width (.getWidth image)
         height (.getHeight image)
         mirrored-image (BufferedImage. width height (.getType image))]
