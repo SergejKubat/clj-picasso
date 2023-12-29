@@ -100,10 +100,10 @@ Add the following dependency to your project.clj file:
 (def image (picasso/load-from-path "path/to/image.jpg"))
 
 ;; Apply grayscale filter
-(def resized-image (picasso/apply-grayscale image))
+(def grayscaled-image (picasso/apply-grayscale image))
 
 ;; Save the grayscaled image
-(picasso/save-image resized-image "path/to/grayscale-image.jpg")
+(picasso/save-image grayscaled-image "path/to/grayscale-image.jpg")
 ```
 
 Before:
@@ -164,9 +164,11 @@ Contributions, bug reports, and feature requests are welcome!
 
 [7] Stroking and Filling Graphics Primitives (https://www.iitk.ac.in/esc101/05Aug/tutorial/2d/display/strokeandfill.html)
 
-[8] https://github.com/mikera/imagez
+[8] (https://docs.oracle.com/javase/8/docs/api/java/awt/image/BufferedImage.html)
 
-[9] https://github.com/marick/Midje
+[9] https://github.com/mikera/imagez
+
+[10] https://github.com/marick/Midje
 
 ## License
 
