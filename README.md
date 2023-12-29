@@ -97,13 +97,13 @@ Add the following dependency to your project.clj file:
 (require '[clj-picasso.core :as picasso])
 
 ;; Load an image
-(def image (picasso/load-from-path "path/to/image.jpg"))
+(def image (picasso/load-from-path "path/to/image.png"))
 
 ;; Apply grayscale filter
 (def grayscaled-image (picasso/apply-grayscale image))
 
-;; Save the grayscaled image
-(picasso/save-image grayscaled-image "path/to/grayscale-image.jpg")
+;; Save grayscaled image
+(picasso/save-image grayscaled-image "path/to/grayscaled-image.png")
 ```
 
 Before:
@@ -118,15 +118,13 @@ After:
 
 Explore the usage of **clj-picasso** with the following examples:
 
-[//]: # (- [Basic Image Operations]&#40;examples/basic-operations.clj&#41;)
-
-[//]: # (- [Color Manipulation]&#40;examples/color-manipulation.clj&#41;)
-
-[//]: # (- [Image Overlay]&#40;examples/image-overlay.clj&#41;)
-
-[//]: # (- [Drawing on Images]&#40;examples/drawing-on-images.clj&#41;)
-
-[//]: # (- [Batch Processing]&#40;examples/batch-processing.clj&#41;)
+- [Basic Operations](examples/basic_operations.md)
+- [Filters](examples/filters.md)
+- [Image Overlay](examples/overlay.md)
+- [Drawing on Images](examples/drawing.md)
+- [Watermark](examples/watermark.md)
+- [Comparison](examples/comparison.md)
+- [Batch processing](examples/batch_processing.md)
 
 Feel free to examine these examples to understand how to use different features of the library in your own projects.
 

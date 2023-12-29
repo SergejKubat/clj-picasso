@@ -22,11 +22,3 @@
   (let [image-files (get-all-files directory)]
     (doseq [image-file image-files]                         ;; iterate through image files
       (process-fn image-file))))                            ;; apply process function to image file
-
-;(defn process-image [^File image-file]
-;  (let [image (load-from-file image-file)
-;        cropped-image (crop-image image 0 0 250 250)
-;        mirrored-image (mirror-image cropped-image)
-;        sepia-image (filters/convert-to-sepia mirrored-image)
-;        output-path (.getParent image-file)]
-;    (save-image sepia-image (str output-path "/processed_" (.getName image-file)))))
