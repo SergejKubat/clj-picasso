@@ -85,15 +85,37 @@ To use **clj-picasso** library in your Clojure project, follow the steps below:
 
 ## Installation
 
-Add the following dependency to your project.clj file:
+### Leiningen/Boot
 
 ```clojure
-;; [clj-picasso "1.0.0"]
+[org.clojars.stavrogin/clj-picasso "1.0.0"]
+```
+
+### Clojure CLI/deps.edn
+
+```clojure
+[org.clojars.stavrogin/clj-picasso "1.0.0"]
+```
+
+### Gradle
+
+```java
+implementation("org.clojars.stavrogin:clj-picasso:1.0.0")
+```
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>org.clojars.stavrogin</groupId>
+  <artifactId>clj-picasso</artifactId>
+  <version>1.0.0</version>
+</dependency>
 ```
 
 ## Example usage
 
-```
+```clojure
 (require '[clj-picasso.core :as picasso])
 
 ;; Load an image

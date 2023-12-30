@@ -15,10 +15,6 @@
 .hgignore
 .hg/
 
-# Maven
-pom.xml
-pom.xml.asc
-
 # Profiles
 profiles.clj
 

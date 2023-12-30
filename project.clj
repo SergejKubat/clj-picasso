@@ -6,14 +6,15 @@
 ;;   the terms of this license.
 ;;   You must not remove this notice, or any other, from this software.
 
-(defproject clj-picasso "0.1.0-SNAPSHOT"
+(defproject org.clojars.stavrogin/clj-picasso "1.0.0"
   :author "Sergej Kubat"
-  :description "Image processing library in Clojure."
+  :description "Image processing library for Clojure."
   :url "https://github.com/SergejKubat/clj_picasso"
   :scm {:name "git"
         :url "https://github.com/SergejKubat/clj_picasso"}
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :deploy-repositories [["clojars" {:url "https://repo.clojars.org/"}]]
   :dependencies [[org.clojure/clojure "1.11.1"]]
   :profiles {:dev {:dependencies [[midje "1.10.9"]]
                    :plugins [[lein-midje "3.2.1"]]
@@ -21,5 +22,5 @@
                                  *unchecked-math* :warn-on-boxed
                                  *print-length* 16}
                    }}
-  :source-paths ["src" "test"]
+  :source-paths ["src"]
   :repl-options {:init-ns clj-picasso.core})
