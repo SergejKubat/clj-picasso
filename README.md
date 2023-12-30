@@ -1,10 +1,87 @@
 # clj-picasso
 
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.stavrogin/clj-picasso.svg)](https://clojars.org/org.clojars.stavrogin/clj-picasso)
+
 ## Overview
 
 This is a simple image processing library for Clojure, developed as a university project. 
-The library provides basic functionalities for loading, saving, and manipulating images. 
+The library provides basic functionalities for loading, saving, and manipulating images.
+The primary goal of this library is to provide a versatile and easy-to-use set of tools 
+for handling various image processing tasks in Clojure.
 It is designed to be easy to use and extendable.
+
+## Getting Started
+
+To use **clj-picasso** library in your Clojure project, follow the steps below:
+
+## Installation
+
+### Leiningen/Boot
+
+```clojure
+[org.clojars.stavrogin/clj-picasso "1.0.0"]
+```
+
+### Clojure CLI/deps.edn
+
+```clojure
+[org.clojars.stavrogin/clj-picasso "1.0.0"]
+```
+
+### Gradle
+
+```java
+implementation("org.clojars.stavrogin:clj-picasso:1.0.0")
+```
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>org.clojars.stavrogin</groupId>
+  <artifactId>clj-picasso</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
+
+## Example usage
+
+```clojure
+(ns user-ns.core
+  (:require [clj-picasso.loading :refer :all]
+            [clj-picasso.filters :refer :all]))
+
+;; Load an image
+(def image (load-from-path "path/image.png"))
+
+;; Apply grayscale filter
+(def grayscaled-image (apply-grayscale image))
+
+;; Save grayscaled image
+(save-image grayscaled-image "path/grayscale-image.png")
+```
+
+Before:
+
+![Before](resources/images/input.png)
+
+After:
+
+![Before](resources/images/grayscale.png)
+
+# More examples
+
+Explore the usage of **clj-picasso** with the following examples:
+
+- [Basic Operations](examples/basic_operations.md)
+- [Filters](examples/filters.md)
+- [Image Overlay](examples/overlay.md)
+- [Drawing on Images](examples/drawing.md)
+- [Watermark](examples/watermark.md)
+- [Comparison](examples/comparison.md)
+- [Batch processing](examples/batch_processing.md)
+
+Feel free to examine these examples to understand how to use different features of the library in your own projects.
 
 ## Features
 
@@ -59,7 +136,7 @@ It is designed to be easy to use and extendable.
 
 ## Supported Image Formats
 
-**clj-picasso** is built on top of Java's BufferedImage class and supports a variety of image formats. 
+**clj-picasso** is built on top of Java's BufferedImage class and supports a variety of image formats.
 The supported image formats include, but may not be limited to:
 
 - JPEG
@@ -69,86 +146,9 @@ The supported image formats include, but may not be limited to:
 - BMP
 - WBMP
 
-Please note that the exact set of supported formats can depend on the underlying Java implementation and 
-the platform your code is running on. For detailed information about supported image formats in Java, 
+Please note that the exact set of supported formats can depend on the underlying Java implementation and
+the platform your code is running on. For detailed information about supported image formats in Java,
 refer to the [Java Image I/O API documentation](https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/javax/imageio/package-summary.html).
-
-
-## Getting Started
-
-To use **clj-picasso** library in your Clojure project, follow the steps below:
-
-### Prerequisites
-
-- [Clojure](https://clojure.org/releases/downloads) installed (version 1.11.1)
-- [Leiningen](https://leiningen.org/) build tool for Clojure projects
-
-## Installation
-
-### Leiningen/Boot
-
-```clojure
-[org.clojars.stavrogin/clj-picasso "1.0.0"]
-```
-
-### Clojure CLI/deps.edn
-
-```clojure
-[org.clojars.stavrogin/clj-picasso "1.0.0"]
-```
-
-### Gradle
-
-```java
-implementation("org.clojars.stavrogin:clj-picasso:1.0.0")
-```
-
-### Maven
-
-```xml
-<dependency>
-  <groupId>org.clojars.stavrogin</groupId>
-  <artifactId>clj-picasso</artifactId>
-  <version>1.0.0</version>
-</dependency>
-```
-
-## Example usage
-
-```clojure
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
-;; Apply grayscale filter
-(def grayscaled-image (picasso/apply-grayscale image))
-
-;; Save grayscaled image
-(picasso/save-image grayscaled-image "path/to/grayscaled-image.png")
-```
-
-Before:
-
-![Before](resources/images/input.png)
-
-After:
-
-![Before](resources/images/grayscale.png)
-
-# More examples
-
-Explore the usage of **clj-picasso** with the following examples:
-
-- [Basic Operations](examples/basic_operations.md)
-- [Filters](examples/filters.md)
-- [Image Overlay](examples/overlay.md)
-- [Drawing on Images](examples/drawing.md)
-- [Watermark](examples/watermark.md)
-- [Comparison](examples/comparison.md)
-- [Batch processing](examples/batch_processing.md)
-
-Feel free to examine these examples to understand how to use different features of the library in your own projects.
 
 ## Testing
 
@@ -165,8 +165,38 @@ lein midje
 
 ## Contributing
 
-If you would like to contribute to the project, feel free to fork the repository and submit pull requests. 
-Contributions, bug reports, and feature requests are welcome!
+Contributions to this image processing library are highly encouraged! If you have ideas for improvements, 
+encounter issues, or want to add new features, follow the steps below to contribute:
+
+### Prerequisites
+
+Before contributing, make sure you have the following installed on your machine:
+
+- [Clojure](https://clojure.org/releases/downloads) (version 1.11.1 or newer)
+- [Leiningen](https://leiningen.org/) build tool for Clojure projects
+- [Git](https://git-scm.com/) version control tool
+
+### Clone the Repository
+
+Clone the repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/SergejKubat/clj_picasso.git
+```
+
+Change into the project directory:
+
+```bash
+cd clj-picasso
+```
+
+### Install Dependencies
+
+Make sure to install the project dependencies using Leiningen:
+
+```bash
+lein deps
+```
 
 ## Acknowledgments
 
@@ -192,7 +222,7 @@ Contributions, bug reports, and feature requests are welcome!
 
 ## License
 
-Copyright © 2023 FIXME
+Copyright © 2023
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
