@@ -1,112 +1,100 @@
 ## Basic operations
 
+First, you need to load the necessary namespaces:
+
+```clojure
+(ns user-ns.core
+  (:require [clj-picasso.loading :refer :all]
+            [clj-picasso.basic-operations :refer :all]))
+```
+
+Then load an image:
+
+```clojure
+;; Load an image
+(def image (load-from-path "path/image.png"))
+```
+
 ### Resize image
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Resize an image
-(def resized-image (picasso/resize image 400 225))
+(def resized-image (resize image 400 225))
 
-;; Save resized image
-(picasso/save-image resized-image "path/to/resized-image.png")
+;; Save output image
+(save-image resized-image ".path/resized-image.jpg")
 ```
 
-Output:
+Example output:
 
 ![Output](../resources/images/resized.png)
 
 ### Scale image
 
-```
-(require '[clj-picasso.core :as picasso])
+```clojure
+;; Scale an image
+(def scaled-image (scale image 2))
 
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
-;; Scale image
-(def scaled-image (picasso/scale image 2.0))
-
-;; Save scaled image
-(picasso/save-image scaled-image "path/to/scaled-image.png")
+;; Save output image
+(save-image scaled-image "path/scaled-image.jpg")
 ```
 
-Output:
+Example output:
 
 ![Output](../resources/images/scaled.png)
 
 ### Crop image
 
-```
-(require '[clj-picasso.core :as picasso])
+```clojure
+;; Crop an image
+(def cropped-image (crop image 200 200))
 
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
-;; Crop image
-(def cropped-image (picasso/crop image 200 200))
-
-;; Save cropped image
-(picasso/save-image cropped-image "path/to/grayscale-image.png")
+;; Save output image
+(save-image cropped-image "path/cropped-image.jpg")
 ```
 
-Output:
+Example output:
 
 ![Output](../resources/images/cropped.png)
 
 ### Rotate image
 
-```
-(require '[clj-picasso.core :as picasso])
+```clojure
+;; Rotate an image
+(def rotated-image (rotate image 180))
 
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
-;; Rotate image
-(def rotated-image (picasso/rotate image 180))
-
-;; Save rotated image
-(picasso/save-image rotated-image "path/to/rotated-image.png")
+;; Save output image
+(save-image rotated-image "path/rotated-image.jpg")
 ```
 
-Output:
+Example output:
 
 ![Output](../resources/images/rotated.png)
 
 ### Mirror image
 
-```
-(require '[clj-picasso.core :as picasso])
+```clojure
+;; Mirror an image
+(def mirrored-image (mirror image))
 
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
-;; Mirror image
-(def mirrored-image (picasso/mirror image))
-
-;; Save mirrored image
-(picasso/save-image mirrored-image "path/to/mirrored-image.png")
+;; Save output image
+(save-image mirrored-image "path/mirrored-image.jpg")
 ```
 
-Output:
+Example output:
 
 ![Output](../resources/images/mirrored.png)
 
 ### Generate random image
 
-```
-(require '[clj-picasso.core :as picasso])
+```clojure
+; Random image
+(def random-image (generate-random-image 200 200))
 
-;; Random image
-(def random-image (picasso/generate-random-image 200 200))
-
-;; Save random image
-(picasso/save-image random-image "path/to/random-image.png")
+; Save output image
+(save-image random-image "path/random-image.jpg")
 ```
 
-Output:
+Example output:
 
 ![Output](../resources/images/random.png)

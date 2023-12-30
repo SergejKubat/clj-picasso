@@ -1,18 +1,28 @@
 ## Filters
 
+First, you need to load the necessary namespaces:
+
+```clojure
+(ns user-ns.core
+  (:require [clj-picasso.loading :refer :all]
+            [clj-picasso.filters :refer :all]))
+```
+
+Then load an image:
+
+```clojure
+;; Load an image
+(def image (load-from-path "path/image.png"))
+```
+
 ### Apply grayscale filter
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Apply grayscale filter
-(def grayscaled-image (picasso/apply-grayscale image))
+(def grayscaled-image (apply-grayscale image))
 
 ;; Save grayscaled image
-(picasso/save-image grayscaled-image "path/to/grayscale-image.png")
+(save-image grayscaled-image "path/grayscale-image.png")
 ```
 
 Output:
@@ -21,17 +31,12 @@ Output:
 
 ### Apply sepia filter
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Apply sepia filter
-(def sepia-image (picasso/apply-sepia image))
+(def sepia-image (apply-sepia image))
 
 ;; Save sepia image
-(picasso/save-image sepia-image "path/to/sepia-image.png")
+(save-image sepia-image "path/sepia-image.png")
 ```
 
 Output:
@@ -40,17 +45,12 @@ Output:
 
 ### Apply negative filter
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Apply negative filter
-(def negative-image (picasso/apply-negative image))
+(def negative-image (apply-negative image))
 
 ;; Save negative image
-(picasso/save-image negative-image "path/to/negative-image.png")
+(save-image negative-image "path/negative-image.png")
 ```
 
 Output:
@@ -59,17 +59,12 @@ Output:
 
 ### Apply one-channel filter
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Apply one-channel filter with "red" effect
-(def output-image (picasso/apply-one-channel image "red"))
+(def red-image (apply-one-channel image "red"))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image red-image "path/red-image.png")
 ```
 
 Output:
@@ -78,17 +73,12 @@ Output:
 
 ### Apply median filter
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Apply median filter
-(def median-image (picasso/apply-median image 2))
+(def median-image (apply-median image 2))
 
 ;; Save median image
-(picasso/save-image median-image "path/to/median-image.png")
+(save-image median-image "path/median-image.png")
 ```
 
 Output:
@@ -97,17 +87,12 @@ Output:
 
 ### Apply blur filter
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Apply blur filter
-(def blurred-image (picasso/apply-blur image 5))
+(def blurred-image (apply-blur image 5))
 
 ;; Save blurred image
-(picasso/save-image blurred-image "path/to/blurred-image.png")
+(save-image blurred-image "path/blurred-image.png")
 ```
 
 Output:
@@ -116,17 +101,12 @@ Output:
 
 ### Adjust brightness
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Adjust brightness
-(def output-image (picasso/adjust-brightness image 1.5))
+(def output-image (adjust-brightness image 1.5))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.png")
 ```
 
 Output:
@@ -135,17 +115,12 @@ Output:
 
 ### Adjust contrast
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Adjust contrast
-(def output-image (picasso/adjust-contrast image 1.5))
+(def output-image (adjust-contrast image 1.5))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.png")
 ```
 
 Output:

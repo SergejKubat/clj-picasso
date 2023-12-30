@@ -1,10 +1,16 @@
 ## Batch processing
 
+First, you need to load the necessary namespaces:
+
+```clojure
+(ns user-ns.core
+  (:require [clj-picasso.loading :refer :all]
+            [clj-picasso.batch-processing :refer :all]))
+```
+
 ### Example
 
-```
-(require '[clj-picasso.core :as picasso])
-
+```clojure
 ; Function for image processing
 (defn process-image [^File image-file]
   (let [image (load-from-file image-file)
@@ -15,5 +21,11 @@
     (save-image sepia-image (str output-path "/processed_" (.getName image-file)))))
 
 ; Process directory
-(picasso/process-images-in-directory ""path/to/directory" process-image)
+(picasso/process-images-in-directory "path/" process-image)
 ```
+
+Example outputs:
+
+![Output1](../resources/images/process/processed_input.png)
+
+![Output2](../resources/images/process/processed_input-2.png)

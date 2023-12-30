@@ -1,18 +1,28 @@
 ## Watermark
 
+```clojure
+(ns user-ns.core
+  (:require [clj-picasso.loading :refer :all]
+            [clj-picasso.watermark :refer :all]))
+```
+
+Then load images:
+
+```clojure
+;; Load first image
+(def image (load-from-path "path/image1.png"))
+;; Load watermark image
+(def watermark-image (load-from-path "path/watermark-image.png"))
+```
+
 ### Set text watermark
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Set watermark
-(def output-image (picasso/set-watermark-text image "Watermark" 175 200))
+(def output-image (set-watermark-text image "Watermark" 175 200))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.png")
 ```
 
 Output:
@@ -21,19 +31,12 @@ Output:
 
 ### Set image watermark
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-;; Load watermark image
-(def image (picasso/load-from-path "path/to/watermark-image.png"))
-
+```clojure
 ;; Set watermark
-(def output-image (picasso/set-watermark-image image watermark-image 400 300))
+(def output-image (set-watermark-image image watermark-image 400 300))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.png")
 ```
 
 Output:
@@ -42,19 +45,12 @@ Output:
 
 ### Set tiled image watermark
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-;; Load watermark image
-(def image (picasso/load-from-path "path/to/watermark-image.png"))
-
+```clojure
 ;; Set watermark
-(def output-image (picasso/set-watermark-image image watermark-image))
+(def output-image (set-watermark-image image watermark-image))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.png")
 ```
 
 Output:

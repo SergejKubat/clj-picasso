@@ -1,18 +1,28 @@
 ## Drawing
 
+First, you need to load the necessary namespaces:
+
+```clojure
+(ns user-ns.core
+  (:require [clj-picasso.loading :refer :all]
+            [clj-picasso.drawing :refer :all]))
+```
+
+Then load an image:
+
+```clojure
+;; Load an image
+(def image (load-from-path "path/image.png"))
+```
+
 ### Draw line on image
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Draw line on image
-(def output-image (drawing/draw-line image 100 175 400 175 10.0 "#b7ef7b"))
+(def output-image (draw-line image 100 175 400 175 10.0 "#b7ef7b"))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.jpg")
 ```
 
 Output:
@@ -21,17 +31,12 @@ Output:
 
 ### Draw rectangle on image
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
+```clojure
 ;; Draw rectangle on image
-(def output-image (drawing/rectangle image 20 20 200 100 10.0 "#000080"))
+(def output-image (draw-rectangle image 20 20 200 100 10.0 "#000080"))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.jpg")
 ```
 
 Output:
@@ -40,17 +45,12 @@ Output:
 
 ### Draw ellipse on image
 
-```
-(require '[clj-picasso.core :as picasso])
-
-;; Load an image
-(def image (picasso/load-from-path "path/to/image.png"))
-
-;; Draw ellipse on image
-(def output-image (drawing/draw-ellipse image1 100 100 150 150 10.0 "#8a7443"))
+```clojure
+; Draw ellipse on image
+(def output-image (draw-ellipse image 100 100 150 150 10.0 "#8a7443"))
 
 ;; Save output image
-(picasso/save-image output-image "path/to/output-image.png")
+(save-image output-image "path/output-image.jpg")
 ```
 
 Output:
