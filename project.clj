@@ -21,5 +21,5 @@
                                  *unchecked-math* :warn-on-boxed
                                  *print-length* 16}
                    }}
-  :source-paths ["src"]
+  :source-paths ["src" "test"]
   :repl-options {:init-ns clj-picasso.core})
